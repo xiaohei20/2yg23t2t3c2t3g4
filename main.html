@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2025年农历新年倒计时</title>
+<style>
+  body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #D53D12;
+  }
+
+  #outer-box {
+    width: 80%;
+    height: 80%;
+    background-color: #D53D12;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+  #credit {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    color: gray;
+    font-size: 12px;
+  }
+
+  #inner-box {
+    width: 70%;
+    height: 70%;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 48px;
+    color: #FFCA00;
+    text-align: center;
+  }
+
+  #bgVideo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+  }
+
+  #countdown {
+    z-index: 1;
+  }
+
+  #date-time {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 24px;
+    color: #FFA500;
+    background: rgba(255, 165, 0, 0.5);
+    backdrop-filter: blur(5px);
+    border-radius: 15px; /* 添加圆角 */
+  }
+
+</style>
+</head>
+<body>
+
+<video autoplay muted loop id="bgVideo">
+  <source src="1.mp4" type="video/mp4">
+  您的浏览器不支持HTML5视频标签。
+</video>
+
+<div id="outer-box">
+  <div id="inner-box">
+    <div id="countdown"></div>
+  </div>
+</div>
+
+<div id="date-time"></div>
+
+<div id="credit">仅供学习 陈補光及AM科技制作</div>
+
+<script>
+function updateCountdown() {
+  const now = new Date();
+  const newYear = new Date('2025-01-01T00:00:00');
+  const timeLeft = newYear - now;
+
+  if (timeLeft <= 0) {
+    clearInterval(countdownInterval);
+    document.getElementById('countdown').innerText = '新年快乐!';
+    return;
+  }
+
+  const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+  document.getElementById('countdown').innerText = `距离新年还有: 
+  ${days}天 ${hours}小时 ${minutes}分钟 ${seconds}秒`;
+}
+
+function updateDateTime() {
+  const now = new Date();
+  const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
+  document.getElementById('date-time').innerText = now.toLocaleDateString('zh-CN', options);
+}
+
+updateCountdown();
+updateDateTime();
+const countdownInterval = setInterval(updateCountdown, 1000);
+const dateTimeInterval = setInterval(updateDateTime, 1000);
+</script>
+
+</body>
+
+</html>
